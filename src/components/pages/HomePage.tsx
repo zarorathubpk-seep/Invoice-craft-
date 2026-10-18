@@ -101,7 +101,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onSelectTemplate
             {/* Left Column: Copy & Actions */}
             <div className="lg:col-span-6 space-y-6">
               {/* Trust Badge */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200/80">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-600 border border-blue-200">
                 <ShieldCheck className="w-4 h-4 text-blue-600" />
                 <span>100% Client-Side Privacy · No Account Required</span>
               </div>
@@ -116,12 +116,12 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onSelectTemplate
                 Design beautiful invoices, estimates, and receipts with free, easy-to-use business tools. Customize, preview in real time, and download crisp A4 PDF documents.
               </p>
 
-              {/* Action Buttons */}
+              {/* Action Buttons (Standardized button system: Primary & Secondary rounded-lg) */}
               <div className="flex flex-wrap items-center gap-3 pt-2">
                 <button
                   type="button"
                   onClick={() => onNavigate('generator')}
-                  className="inline-flex items-center gap-2 px-6 py-3 text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-xl shadow-md hover:shadow-lg transition-all cursor-pointer"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-lg shadow-sm hover:shadow-md transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   <PlusCircle className="w-4 h-4" />
                   <span>Create Free Invoice</span>
@@ -130,15 +130,15 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onSelectTemplate
                 <button
                   type="button"
                   onClick={() => onNavigate('templates')}
-                  className="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-300 rounded-xl shadow-xs transition-all cursor-pointer"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-300 rounded-lg shadow-xs transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-slate-300"
                 >
                   <span>Explore Templates</span>
-                  <ArrowRight className="w-4 h-4 text-slate-400" />
+                  <ArrowRight className="w-4 h-4 text-slate-500" />
                 </button>
               </div>
 
               {/* Genuine Trust Indicators Strip */}
-              <div className="pt-6 border-t border-slate-200/70 grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs text-slate-600">
+              <div className="pt-6 border-t border-slate-200 grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs text-slate-600">
                 <div className="flex items-center gap-1.5">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                   <span>Free generator</span>
@@ -162,43 +162,49 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onSelectTemplate
             <div className="lg:col-span-6 relative">
               <div className="relative mx-auto max-w-lg lg:max-w-none">
                 {/* Floating Card Chrome */}
-                <div className="bg-white rounded-2xl shadow-xl border border-slate-200/90 overflow-hidden transform hover:-translate-y-1 transition-all duration-300">
+                <div className="bg-white rounded-xl shadow-xl border border-slate-200 overflow-hidden transform hover:-translate-y-1 transition-all duration-300">
                   {/* Demo Control Header */}
                   <div className="bg-slate-900 text-white px-5 py-3.5 flex items-center justify-between text-xs">
                     <div className="flex items-center gap-2">
                       <div className="flex gap-1.5">
-                        <span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
-                        <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
-                        <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
+                        <span className="w-2.5 h-2.5 rounded-full bg-red-500" />
+                        <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
+                        <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
                       </div>
-                      <span className="font-mono text-[11px] text-slate-300 ml-2">Live Interactive Preview</span>
+                      <span className="font-mono text-xs text-slate-300 ml-2">Live Interactive Preview</span>
                     </div>
 
-                    {/* Template switcher tabs on live demo */}
-                    <div className="flex items-center gap-1 bg-slate-800 p-0.5 rounded-md">
+                    {/* Template switcher tabs with clear affordance and accessible touch targets (Issue 2) */}
+                    <div role="tablist" aria-label="Invoice Preview Template" className="flex items-center gap-1 bg-slate-800 p-1 rounded-lg border border-slate-700/60">
                       <button
                         type="button"
+                        role="tab"
+                        aria-selected={heroTemplate === 'modern_minimal'}
                         onClick={() => setHeroTemplate('modern_minimal')}
-                        className={`px-2 py-0.5 rounded text-[10px] font-medium transition-colors ${
-                          heroTemplate === 'modern_minimal' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white'
+                        className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-colors min-h-[32px] flex items-center justify-center cursor-pointer ${
+                          heroTemplate === 'modern_minimal' ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
                         }`}
                       >
                         Minimal
                       </button>
                       <button
                         type="button"
+                        role="tab"
+                        aria-selected={heroTemplate === 'executive_navy'}
                         onClick={() => setHeroTemplate('executive_navy')}
-                        className={`px-2 py-0.5 rounded text-[10px] font-medium transition-colors ${
-                          heroTemplate === 'executive_navy' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white'
+                        className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-colors min-h-[32px] flex items-center justify-center cursor-pointer ${
+                          heroTemplate === 'executive_navy' ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
                         }`}
                       >
                         Executive
                       </button>
                       <button
                         type="button"
+                        role="tab"
+                        aria-selected={heroTemplate === 'elegant_blue'}
                         onClick={() => setHeroTemplate('elegant_blue')}
-                        className={`px-2 py-0.5 rounded text-[10px] font-medium transition-colors ${
-                          heroTemplate === 'elegant_blue' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white'
+                        className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-colors min-h-[32px] flex items-center justify-center cursor-pointer ${
+                          heroTemplate === 'elegant_blue' ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
                         }`}
                       >
                         Royal
@@ -207,37 +213,39 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onSelectTemplate
                   </div>
 
                   {/* Working Invoice Document Preview */}
-                  <div className="p-6 sm:p-8 space-y-6 text-xs text-slate-800 bg-white">
-                    {/* Header */}
+                  <div className="p-6 sm:p-8 space-y-6 text-xs text-slate-900 bg-white">
+                    {/* Header: Fixed heading hierarchy H1 -> H2 (Issue 9) */}
                     <div className="flex justify-between items-start border-b border-slate-100 pb-4">
                       <div>
-                        <h3 className="font-bold text-base text-slate-900">Studio North Creative</h3>
-                        <p className="text-[11px] text-slate-500">Brand & Web Engineering</p>
+                        <h2 className="font-bold text-base text-slate-900">Studio North Creative</h2>
+                        <p className="text-xs text-slate-600">Brand &amp; Web Engineering</p>
                       </div>
                       <div className="text-right">
-                        <span className="inline-block px-2 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wider bg-blue-50 text-blue-700">
+                        <span className="inline-block px-2.5 py-1 rounded text-xs font-semibold uppercase tracking-wider bg-blue-50 text-blue-600">
                           Tax Invoice
                         </span>
                         <p className="font-mono font-bold text-sm text-slate-900 mt-1">#INV-2026-001</p>
-                        <p className="text-[10px] text-slate-400">Due: Net 30 Days</p>
+                        <p className="text-xs text-slate-500">Due: Net 30 Days</p>
                       </div>
                     </div>
 
-                    {/* Billed To with live input */}
+                    {/* Billed To with accessible label association (Issue 12) */}
                     <div className="grid grid-cols-2 gap-4 py-1">
                       <div>
-                        <span className="text-[10px] font-bold uppercase text-slate-400">Billed To</span>
+                        <label htmlFor="hero-client-name" className="block text-xs font-bold text-slate-500">
+                          Billed To
+                        </label>
                         <input
+                          id="hero-client-name"
                           type="text"
                           value={heroClient}
                           onChange={(e) => setHeroClient(e.target.value)}
-                          aria-label="Client Name"
                           className="w-full font-semibold text-slate-900 bg-transparent border-b border-dashed border-slate-300 focus:border-blue-500 focus:outline-none text-xs pb-0.5 mt-0.5"
                         />
-                        <p className="text-[11px] text-slate-500">San Francisco, CA</p>
+                        <p className="text-xs text-slate-600">San Francisco, CA</p>
                       </div>
                       <div className="text-right">
-                        <span className="text-[10px] font-bold uppercase text-slate-400">Amount Due</span>
+                        <span className="text-xs font-bold text-slate-500">Amount Due</span>
                         <p className="text-2xl font-bold font-mono text-blue-600 mt-0.5">
                           {formatCurrency(heroAmount, 'USD')}
                         </p>
@@ -247,32 +255,32 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onSelectTemplate
                     {/* Table */}
                     <table className="w-full text-left">
                       <thead>
-                        <tr className="border-b border-slate-200 text-slate-400 uppercase text-[10px]">
+                        <tr className="border-b border-slate-200 text-slate-500 uppercase text-xs">
                           <th scope="col" className="py-2">Description</th>
-                          <th scope="col" className="py-2 text-center w-12">Qty</th>
-                          <th scope="col" className="py-2 text-right w-20">Amount</th>
+                          <th scope="col" className="py-2 text-center w-14">Qty</th>
+                          <th scope="col" className="py-2 text-right w-24">Amount</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-slate-100">
                         <tr>
                           <td className="py-2.5 font-medium text-slate-900">Frontend SaaS Architecture</td>
-                          <td className="py-2.5 text-center font-mono">1</td>
-                          <td className="py-2.5 text-right font-mono font-semibold">$1,850.00</td>
+                          <td className="py-2.5 text-center font-mono text-slate-600">1</td>
+                          <td className="py-2.5 text-right font-mono font-semibold text-slate-900">$1,850.00</td>
                         </tr>
                         <tr>
                           <td className="py-2.5 font-medium text-slate-900">Custom Invoice Document Engine</td>
-                          <td className="py-2.5 text-center font-mono">5 hrs</td>
-                          <td className="py-2.5 text-right font-mono font-semibold">$600.00</td>
+                          <td className="py-2.5 text-center font-mono text-slate-600">5 hrs</td>
+                          <td className="py-2.5 text-right font-mono font-semibold text-slate-900">$600.00</td>
                         </tr>
                       </tbody>
                     </table>
 
                     {/* Totals Strip */}
                     <div className="flex justify-end pt-2 border-t border-slate-100">
-                      <div className="w-48 space-y-1.5 text-[11px]">
-                        <div className="flex justify-between text-slate-500">
+                      <div className="w-48 space-y-1.5 text-xs">
+                        <div className="flex justify-between text-slate-600">
                           <span>Subtotal:</span>
-                          <span className="font-mono tabular-nums">$2,450.00</span>
+                          <span className="font-mono tabular-nums text-slate-900">$2,450.00</span>
                         </div>
                         <div className="flex justify-between font-bold text-slate-900 pt-1 border-t border-slate-200 text-xs">
                           <span>Total Balance:</span>
@@ -281,15 +289,15 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onSelectTemplate
                       </div>
                     </div>
 
-                    {/* Launch CTA */}
+                    {/* Launch CTA (standardized primary button) */}
                     <div className="pt-2">
                       <button
                         type="button"
                         onClick={() => onNavigate('generator')}
-                        className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                        className="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-semibold flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-xs"
                       >
                         <Sparkles className="w-4 h-4" />
-                        <span>Open & Customize This In Editor</span>
+                        <span>Open &amp; Customize This in Editor</span>
                       </button>
                     </div>
                   </div>
@@ -304,7 +312,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onSelectTemplate
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
-            <span className="text-xs font-semibold text-blue-600 uppercase tracking-widest">Complete Business Suite</span>
+            <span className="text-xs font-bold text-blue-600 tracking-normal">Complete Business Suite</span>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-1">
               Popular Business Document Tools
             </h2>
@@ -314,7 +322,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onSelectTemplate
           </div>
           <button
             onClick={() => onNavigate('generator')}
-            className="text-xs font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1 cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors cursor-pointer"
           >
             <span>View All Tools</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -404,7 +412,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onSelectTemplate
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
-            <span className="text-xs font-semibold text-blue-600 uppercase tracking-widest">Industry Specific</span>
+            <span className="text-xs font-bold text-blue-600 tracking-normal">Industry Specific</span>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-1">
               Featured Invoice Templates
             </h2>
@@ -414,7 +422,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onSelectTemplate
           </div>
           <button
             onClick={() => onNavigate('templates')}
-            className="text-xs font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1 cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors cursor-pointer"
           >
             <span>Browse All 10 Templates</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -464,7 +472,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onSelectTemplate
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
-            <span className="text-xs font-semibold text-blue-600 uppercase tracking-widest">Financial Education</span>
+            <span className="text-xs font-bold text-blue-600 tracking-normal">Financial Education</span>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-1">
               Helpful Business & Invoicing Guides
             </h2>
@@ -474,7 +482,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onSelectTemplate
           </div>
           <button
             onClick={() => onNavigate('blog')}
-            className="text-xs font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1 cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors cursor-pointer"
           >
             <span>Explore All 12 Articles</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -491,7 +499,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onSelectTemplate
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-xs text-slate-400">
                   <span className="font-semibold text-blue-600 text-[10px] uppercase tracking-wider">{article.category}</span>
-                  <span className="text-[11px]">{article.readTime}</span>
+                  <span className="text-xs">{article.readTime}</span>
                 </div>
                 <h3 className="font-bold text-base text-slate-900 group-hover:text-blue-600 transition-colors leading-snug">
                   {article.title}
@@ -514,7 +522,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onSelectTemplate
 
       {/* 6. BOTTOM CONVERSION STRIP */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-blue-900 via-slate-900 to-blue-950 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="p-8 sm:p-12 rounded-2xl bg-gradient-to-r from-blue-900 via-slate-900 to-blue-950 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-2 text-center md:text-left">
             <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
               Ready to Send Your Next Invoice?
@@ -527,7 +535,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onSelectTemplate
           <button
             type="button"
             onClick={() => onNavigate('generator')}
-            className="px-6 py-3.5 bg-blue-500 hover:bg-blue-400 active:bg-blue-600 text-white font-bold rounded-xl shadow-lg transition-all flex items-center gap-2 text-sm whitespace-nowrap cursor-pointer shrink-0"
+            className="px-6 py-3.5 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold rounded-lg shadow-sm transition-all flex items-center gap-2 text-sm whitespace-nowrap cursor-pointer shrink-0"
           >
             <PlusCircle className="w-5 h-5" />
             <span>Create Free Invoice Now</span>

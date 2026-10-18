@@ -35,7 +35,7 @@ export const Footer: React.FC<FooterProps> = ({ navigate }) => {
 
           {/* Column 2: Generator & Business Tools */}
           <div className="space-y-3">
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-200">Business Tools</h3>
+            <h3 className="text-xs font-bold tracking-normal text-slate-200">Business Tools</h3>
             <ul className="space-y-2 text-sm text-slate-400">
               <li>
                 <button onClick={() => handleNav('generator')} className="hover:text-white transition-colors cursor-pointer text-left">
@@ -77,7 +77,7 @@ export const Footer: React.FC<FooterProps> = ({ navigate }) => {
 
           {/* Column 3: Templates & Guides */}
           <div className="space-y-3">
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-200">Templates & Guides</h3>
+            <h3 className="text-xs font-bold tracking-normal text-slate-200">Templates & Guides</h3>
             <ul className="space-y-2 text-sm text-slate-400">
               <li>
                 <button onClick={() => handleNav('templates')} className="hover:text-white transition-colors cursor-pointer text-left">
@@ -114,7 +114,7 @@ export const Footer: React.FC<FooterProps> = ({ navigate }) => {
 
           {/* Column 4: Trust & Company */}
           <div className="space-y-3">
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-200">Trust & Legal</h3>
+            <h3 className="text-xs font-bold tracking-normal text-slate-200">Trust & Legal</h3>
             <ul className="space-y-2 text-sm text-slate-400">
               <li>
                 <button onClick={() => handleNav('about')} className="hover:text-white transition-colors cursor-pointer text-left">
