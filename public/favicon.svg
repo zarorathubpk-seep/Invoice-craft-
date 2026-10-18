@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <!-- Primary document gradient: Royal Blue into Vibrant Cyan -->
+    <linearGradient id="ic-doc-grad" x1="8" y1="6" x2="52" y2="58" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1D4ED8"/>
+      <stop offset="55%" stop-color="#2563EB"/>
+      <stop offset="100%" stop-color="#0284C7"/>
+    </linearGradient>
+
+    <!-- Folded corner gradient: Luminous Cyan into Emerald Teal -->
+    <linearGradient id="ic-fold-grad" x1="38" y1="6" x2="54" y2="22" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="50%" stop-color="#06B6D4"/>
+      <stop offset="100%" stop-color="#14B8A6"/>
+    </linearGradient>
+
+    <!-- Checkmark badge gradient: Vibrant Teal into Bright Emerald -->
+    <linearGradient id="ic-check-grad" x1="32" y1="32" x2="58" y2="58" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0D9488"/>
+      <stop offset="100%" stop-color="#10B981"/>
+    </linearGradient>
+
+    <!-- Subtle soft shadow for depth -->
+    <filter id="ic-shadow" x="26" y="26" width="36" height="36" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-color="#0F172A" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- 1. Main Folded Invoice Document (Thick, recognizable silhouette) -->
+  <path
+    d="M14 6C10.6863 6 8 8.68629 8 12V52C8 55.3137 10.6863 58 14 58H44C47.3137 58 50 55.3137 50 52V22L34 6H14Z"
+    fill="url(#ic-doc-grad)"
+  />
+
+  <!-- 2. Distinctive Folded Corner Flap -->
+  <path
+    d="M34 6V18C34 20.2091 35.7909 22 38 22H50L34 6Z"
+    fill="url(#ic-fold-grad)"
+  />
+
+  <!-- 3. Minimalist Invoice Ledger Marks (Crisp at 16x16) -->
+  <rect x="15" y="16" width="12" height="3" rx="1.5" fill="#FFFFFF" fill-opacity="0.85"/>
+  <rect x="15" y="24" width="22" height="3" rx="1.5" fill="#FFFFFF" fill-opacity="0.85"/>
+  <rect x="15" y="32" width="16" height="3" rx="1.5" fill="#FFFFFF" fill-opacity="0.55"/>
+
+  <!-- 4. Precision Checkmark Badge (Representing paid, verified, crafted billing) -->
+  <g filter="url(#ic-shadow)">
+    <circle cx="43" cy="43" r="13" fill="url(#ic-check-grad)"/>
+    <circle cx="43" cy="43" r="13" stroke="#FFFFFF" stroke-width="2" stroke-opacity="0.9"/>
+    <!-- Bold white checkmark -->
+    <path
+      d="M38 43.2L41.3 46.5L48.5 39"
+      stroke="#FFFFFF"
+      stroke-width="3"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </g>
+</svg>

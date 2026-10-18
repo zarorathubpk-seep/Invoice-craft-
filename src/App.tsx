@@ -26,6 +26,7 @@ import { CookiePolicyPage } from './components/pages/CookiePolicyPage.tsx';
 import { EditorialPolicyPage } from './components/pages/EditorialPolicyPage.tsx';
 import { FaqPage } from './components/pages/FaqPage.tsx';
 import { SitemapPage } from './components/pages/SitemapPage.tsx';
+import { BrandAssetsPage } from './components/pages/BrandAssetsPage.tsx';
 import { InvoiceData } from './types/invoice.ts';
 
 export default function App() {
@@ -202,6 +203,10 @@ export default function App() {
 
     if (currentRoute === 'sitemap') {
       return <SitemapPage onNavigate={navigate} />;
+    }
+
+    if (currentRoute === 'brand' || currentRoute === 'favicon') {
+      return <BrandAssetsPage />;
     }
 
     // 404 Fallback

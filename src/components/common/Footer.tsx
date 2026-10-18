@@ -156,6 +156,11 @@ export const Footer: React.FC<FooterProps> = ({ navigate }) => {
                   XML Sitemap
                 </button>
               </li>
+              <li>
+                <button onClick={() => handleNav('brand')} className="hover:text-white transition-colors cursor-pointer text-left text-blue-400 font-medium">
+                  Brand &amp; Favicon Kit
+                </button>
+              </li>
             </ul>
           </div>
         </div>
@@ -164,6 +169,8 @@ export const Footer: React.FC<FooterProps> = ({ navigate }) => {
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
           <p>© {new Date().getFullYear()} InvoiceCraft. Built for international small business freedom.</p>
           <div className="flex items-center gap-4">
+            <button onClick={() => handleNav('brand')} className="hover:text-slate-300">Brand Kit</button>
+            <span>·</span>
             <button onClick={() => handleNav('privacy')} className="hover:text-slate-300">Privacy Notice</button>
             <span>·</span>
             <button onClick={() => handleNav('disclaimer')} className="hover:text-slate-300">No Legal Advice Disclaimer</button>
