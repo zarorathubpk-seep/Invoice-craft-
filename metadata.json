@@ -1,0 +1,6 @@
+{
+  "name": "InvoiceCraft",
+  "description": "Professional Online Invoice Generator, Business Document Tools, Invoice Templates & Small Business Hub.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
