@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { AuthProvider, useAuth } from './context/AuthContext.tsx';
 import { Header } from './components/common/Header.tsx';
 import { Footer } from './components/common/Footer.tsx';
 import { CookieConsent } from './components/common/CookieConsent.tsx';
 import { HomePage } from './components/pages/HomePage.tsx';
 import { ToolsPage } from './components/pages/ToolsPage.tsx';
 import { InvoiceEditor } from './components/generator/InvoiceEditor.tsx';
+import { DashboardPage } from './components/dashboard/DashboardPage.tsx';
+import { AuthPage } from './components/auth/AuthPage.tsx';
 import { QuotationGenerator } from './components/tools/QuotationGenerator.tsx';
 import { ReceiptGenerator } from './components/tools/ReceiptGenerator.tsx';
 import { ProFormaGenerator } from './components/tools/ProFormaGenerator.tsx';
@@ -29,12 +32,13 @@ import { SitemapPage } from './components/pages/SitemapPage.tsx';
 import { BrandAssetsPage } from './components/pages/BrandAssetsPage.tsx';
 import { InvoiceData } from './types/invoice.ts';
 
-export default function App() {
+function AppContent() {
+  const { currentUser, loading, setPendingAction, pendingAction } = useAuth();
+
   // Read route from window hash or default to 'home'
   const getInitialRoute = (): string => {
     const hash = window.location.hash.replace(/^#\/?/, '');
     if (!hash) {
-      // Also check pathname
       const path = window.location.pathname.replace(/^\//, '');
       if (path) return path;
       return 'home';
@@ -63,12 +67,40 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // Protected route action handler
+  const handleProtectedAction = (targetRoute: string, payload?: any) => {
+    if (!currentUser) {
+      setPendingAction({ route: targetRoute, payload });
+      navigate('login');
+      return;
+    }
+    if (payload) {
+      setSelectedInvoiceDraft(payload);
+    }
+    navigate(targetRoute);
+  };
+
   const handleSelectTemplate = (invoiceData: InvoiceData) => {
+    if (!currentUser) {
+      setPendingAction({ route: 'generator', payload: invoiceData });
+      navigate('login');
+      return;
+    }
     setSelectedInvoiceDraft(invoiceData);
     navigate('generator');
   };
 
   const handleConvertToInvoice = (invoiceData: InvoiceData) => {
+    if (!currentUser) {
+      setPendingAction({ route: 'generator', payload: invoiceData });
+      navigate('login');
+      return;
+    }
+    setSelectedInvoiceDraft(invoiceData);
+    navigate('generator');
+  };
+
+  const handleEditInvoiceFromDashboard = (invoiceData: InvoiceData) => {
     setSelectedInvoiceDraft(invoiceData);
     navigate('generator');
   };
@@ -78,7 +110,7 @@ export default function App() {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
     name: 'InvoiceCraft',
-    url: 'https://invoicecraft.example',
+    url: 'https://zarorathub.shop',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'All',
     offers: {
@@ -91,16 +123,86 @@ export default function App() {
 
   // Render view based on route
   const renderContent = () => {
-    if (currentRoute === 'home' || currentRoute === '') {
+    // Show clean spinner while Firebase restores session to prevent UI flashing
+    if (loading && (currentRoute === 'generator' || currentRoute === 'dashboard')) {
       return (
-        <HomePage
+        <div className="min-h-[50vh] flex flex-col items-center justify-center space-y-3">
+          <div className="w-8 h-8 border-3 border-blue-600 border-t-transparent rounded-full animate-spin" />
+          <p className="text-xs font-semibold text-slate-500">Restoring secure session...</p>
+        </div>
+      );
+    }
+
+    // Auth Routes
+    if (currentRoute === 'login') {
+      return (
+        <AuthPage
+          initialMode="login"
           onNavigate={navigate}
+          onSuccess={() => {
+            if (pendingAction) {
+              const target = pendingAction.route;
+              if (pendingAction.payload) setSelectedInvoiceDraft(pendingAction.payload);
+              setPendingAction(null);
+              navigate(target);
+            } else {
+              navigate('dashboard');
+            }
+          }}
+        />
+      );
+    }
+
+    if (currentRoute === 'signup') {
+      return (
+        <AuthPage
+          initialMode="signup"
+          onNavigate={navigate}
+          onSuccess={() => {
+            if (pendingAction) {
+              const target = pendingAction.route;
+              if (pendingAction.payload) setSelectedInvoiceDraft(pendingAction.payload);
+              setPendingAction(null);
+              navigate(target);
+            } else {
+              navigate('dashboard');
+            }
+          }}
+        />
+      );
+    }
+
+    // Protected Route: Dashboard
+    if (currentRoute === 'dashboard') {
+      if (!currentUser) {
+        return (
+          <AuthPage
+            initialMode="login"
+            onNavigate={navigate}
+            onSuccess={() => navigate('dashboard')}
+          />
+        );
+      }
+      return (
+        <DashboardPage
+          onNavigate={navigate}
+          onEditInvoice={handleEditInvoiceFromDashboard}
           onSelectTemplate={handleSelectTemplate}
         />
       );
     }
 
+    // Protected Route: Generator
     if (currentRoute === 'generator' || currentRoute === 'tools/invoice-generator') {
+      if (!currentUser) {
+        return (
+          <AuthPage
+            initialMode="login"
+            onNavigate={navigate}
+            onSuccess={() => navigate('generator')}
+          />
+        );
+      }
       return (
         <InvoiceEditor
           initialInvoice={selectedInvoiceDraft}
@@ -109,6 +211,23 @@ export default function App() {
       );
     }
 
+    // Public Route: Home
+    if (currentRoute === 'home' || currentRoute === '') {
+      return (
+        <HomePage
+          onNavigate={(target) => {
+            if (target === 'generator' && !currentUser) {
+              handleProtectedAction('generator');
+            } else {
+              navigate(target);
+            }
+          }}
+          onSelectTemplate={handleSelectTemplate}
+        />
+      );
+    }
+
+    // Public Route: Business Suite Hub
     if (currentRoute === 'tools') {
       return <ToolsPage onNavigate={navigate} />;
     }
@@ -216,7 +335,7 @@ export default function App() {
         <p className="text-base text-slate-600">The requested page or document could not be found.</p>
         <button
           onClick={() => navigate('home')}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg text-xs font-semibold hover:bg-blue-700"
+          className="px-4 py-2 bg-blue-600 text-white rounded-lg text-xs font-semibold hover:bg-blue-700 cursor-pointer"
         >
           Return to Homepage
         </button>
@@ -241,5 +360,13 @@ export default function App() {
       <Footer navigate={navigate} />
       <CookieConsent />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 }

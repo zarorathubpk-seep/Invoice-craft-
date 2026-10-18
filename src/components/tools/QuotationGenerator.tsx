@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { QuotationData, LineItem, CurrencyCode } from '../../types/invoice.ts';
+import { QuotationData, InvoiceData, LineItem, CurrencyCode } from '../../types/invoice.ts';
 import { DEFAULT_BUSINESS, DEFAULT_CLIENT, saveInvoiceToStorage } from '../../utils/storage.ts';
 import { calculateInvoiceTotals, calculateLineTotal, formatCurrency } from '../../utils/calculations.ts';
 import { downloadInvoicePdf, printInvoice } from '../../utils/pdfGenerator.ts';
@@ -96,7 +96,7 @@ export const QuotationGenerator: React.FC<QuotationGeneratorProps> = ({ onConver
   };
 
   const handleConvert = () => {
-    const invoiceConverted = {
+    const invoiceConverted: InvoiceData = {
       ...quotation,
       id: `inv_${Date.now()}`,
       invoiceNumber: `INV-${new Date().getFullYear()}-${Math.floor(100 + Math.random() * 900)}`,

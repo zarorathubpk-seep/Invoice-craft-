@@ -1,0 +1,157 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User account document storing profile metadata.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128 },
+        "email": { "type": "string", "maxLength": 256 },
+        "displayName": { "type": "string", "maxLength": 128 },
+        "photoURL": { "type": "string", "maxLength": 1024 },
+        "createdAt": { "type": "string", "maxLength": 64 },
+        "updatedAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["uid", "email"]
+    },
+    "BusinessProfile": {
+      "title": "BusinessProfile",
+      "description": "User business identity and default invoicing preferences.",
+      "type": "object",
+      "properties": {
+        "businessName": { "type": "string", "maxLength": 256 },
+        "email": { "type": "string", "maxLength": 256 },
+        "phone": { "type": "string", "maxLength": 64 },
+        "website": { "type": "string", "maxLength": 256 },
+        "addressLine1": { "type": "string", "maxLength": 256 },
+        "addressLine2": { "type": "string", "maxLength": 256 },
+        "city": { "type": "string", "maxLength": 128 },
+        "state": { "type": "string", "maxLength": 128 },
+        "country": { "type": "string", "maxLength": 128 },
+        "postalCode": { "type": "string", "maxLength": 32 },
+        "taxId": { "type": "string", "maxLength": 64 },
+        "currency": { "type": "string", "maxLength": 8 },
+        "defaultPaymentTerms": { "type": "string", "maxLength": 32 },
+        "bankName": { "type": "string", "maxLength": 128 },
+        "accountNumber": { "type": "string", "maxLength": 128 },
+        "accountName": { "type": "string", "maxLength": 128 },
+        "routingNumberOrSwift": { "type": "string", "maxLength": 64 },
+        "paymentInstructions": { "type": "string", "maxLength": 1024 },
+        "defaultTemplate": { "type": "string", "maxLength": 64 },
+        "logoUrl": { "type": "string", "maxLength": 2097152 },
+        "updatedAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["businessName"]
+    },
+    "Invoice": {
+      "title": "Invoice",
+      "description": "User-owned commercial invoice document.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "invoiceNumber": { "type": "string", "maxLength": 64 },
+        "title": { "type": "string", "maxLength": 128 },
+        "status": { "type": "string", "enum": ["draft", "pending", "sent", "paid", "overdue"] },
+        "issueDate": { "type": "string", "maxLength": 32 },
+        "dueDate": { "type": "string", "maxLength": 32 },
+        "paymentTerms": { "type": "string", "maxLength": 32 },
+        "currency": { "type": "string", "maxLength": 8 },
+        "sender": { "type": "object" },
+        "client": { "type": "object" },
+        "items": { "type": "array" },
+        "discount": { "type": "object" },
+        "tax": { "type": "object" },
+        "shippingFee": { "type": "number" },
+        "amountPaid": { "type": "number" },
+        "subtotal": { "type": "number" },
+        "grandTotal": { "type": "number" },
+        "balanceDue": { "type": "number" },
+        "paymentDetails": { "type": "object" },
+        "notes": { "type": "string", "maxLength": 2048 },
+        "terms": { "type": "string", "maxLength": 2048 },
+        "footerNote": { "type": "string", "maxLength": 512 },
+        "customization": { "type": "object" },
+        "createdAt": { "type": "string", "maxLength": 64 },
+        "updatedAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "userId", "invoiceNumber", "status"]
+    },
+    "InvoiceDraft": {
+      "title": "InvoiceDraft",
+      "description": "User-owned autosaved draft invoice.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 128 },
+        "invoiceNumber": { "type": "string", "maxLength": 64 },
+        "title": { "type": "string", "maxLength": 128 },
+        "status": { "type": "string", "maxLength": 32 },
+        "issueDate": { "type": "string", "maxLength": 32 },
+        "dueDate": { "type": "string", "maxLength": 32 },
+        "paymentTerms": { "type": "string", "maxLength": 32 },
+        "currency": { "type": "string", "maxLength": 8 },
+        "sender": { "type": "object" },
+        "client": { "type": "object" },
+        "items": { "type": "array" },
+        "discount": { "type": "object" },
+        "tax": { "type": "object" },
+        "shippingFee": { "type": "number" },
+        "amountPaid": { "type": "number" },
+        "paymentDetails": { "type": "object" },
+        "notes": { "type": "string", "maxLength": 2048 },
+        "terms": { "type": "string", "maxLength": 2048 },
+        "footerNote": { "type": "string", "maxLength": 512 },
+        "customization": { "type": "object" },
+        "createdAt": { "type": "string", "maxLength": 64 },
+        "updatedAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "userId"]
+    },
+    "Customer": {
+      "title": "Customer",
+      "description": "User-owned private customer address book record.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 128 },
+        "companyName": { "type": "string", "maxLength": 128 },
+        "email": { "type": "string", "maxLength": 256 },
+        "phone": { "type": "string", "maxLength": 64 },
+        "billingAddress": { "type": "string", "maxLength": 512 },
+        "shippingAddress": { "type": "string", "maxLength": 512 },
+        "taxId": { "type": "string", "maxLength": 64 },
+        "notes": { "type": "string", "maxLength": 1024 },
+        "totalBilled": { "type": "number" },
+        "invoiceCount": { "type": "number" },
+        "createdAt": { "type": "string", "maxLength": 64 },
+        "updatedAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "userId", "name"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile document."
+    },
+    "/users/{userId}/settings/{settingId}": {
+      "schema": "BusinessProfile",
+      "description": "User business identity preferences."
+    },
+    "/users/{userId}/invoices/{invoiceId}": {
+      "schema": "Invoice",
+      "description": "Private user invoices."
+    },
+    "/users/{userId}/drafts/{draftId}": {
+      "schema": "InvoiceDraft",
+      "description": "Private user invoice drafts."
+    },
+    "/users/{userId}/customers/{customerId}": {
+      "schema": "Customer",
+      "description": "Private user customer contacts."
+    }
+  }
+}

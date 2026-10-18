@@ -110,7 +110,7 @@ export interface InvoiceData {
   id: string;
   invoiceNumber: string;
   title: string;
-  status: 'draft' | 'pending' | 'paid' | 'overdue';
+  status: 'draft' | 'pending' | 'sent' | 'paid' | 'overdue';
   issueDate: string; // YYYY-MM-DD
   dueDate: string; // YYYY-MM-DD
   paymentTerms: PaymentTerms;
@@ -149,7 +149,8 @@ export interface InvoiceCalculations {
   balanceDue: number;
 }
 
-export interface QuotationData extends Omit<InvoiceData, 'status'> {
+export interface QuotationData extends Omit<InvoiceData, 'status' | 'invoiceNumber'> {
+  invoiceNumber?: string;
   quotationNumber: string;
   validUntil: string;
   status: 'draft' | 'sent' | 'accepted' | 'declined' | 'converted';

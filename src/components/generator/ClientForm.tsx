@@ -6,30 +6,44 @@ import { getSavedClients, saveClient } from '../../utils/storage.ts';
 interface ClientFormProps {
   client: CustomerDetails;
   onChange: (client: CustomerDetails) => void;
+  cloudCustomers?: CustomerDetails[];
+  onSaveCustomerToCloud?: (customer: CustomerDetails) => Promise<void>;
 }
 
-export const ClientForm: React.FC<ClientFormProps> = ({ client, onChange }) => {
+export const ClientForm: React.FC<ClientFormProps> = ({ 
+  client, 
+  onChange,
+  cloudCustomers,
+  onSaveCustomerToCloud,
+}) => {
   const [savedClients, setSavedClients] = useState<CustomerDetails[]>(() => getSavedClients());
   const [savedNotification, setSavedNotification] = useState(false);
   const [showShipping, setShowShipping] = useState(Boolean(client.shippingAddress));
+
+  // Combine local and cloud customers without duplicates
+  const customerList = cloudCustomers && cloudCustomers.length > 0 ? cloudCustomers : savedClients;
 
   const handleFieldChange = (field: keyof CustomerDetails, value: any) => {
     onChange({ ...client, [field]: value });
   };
 
-  const handleSaveToAddressBook = () => {
+  const handleSaveToAddressBook = async () => {
     if (!client.name && !client.companyName) {
       alert('Please enter a client name or company name first.');
       return;
     }
-    const updated = saveClient(client);
-    setSavedClients(updated);
+    if (onSaveCustomerToCloud) {
+      await onSaveCustomerToCloud(client);
+    } else {
+      const updated = saveClient(client);
+      setSavedClients(updated);
+    }
     setSavedNotification(true);
     setTimeout(() => setSavedNotification(false), 2000);
   };
 
   const handleSelectSavedClient = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selected = savedClients.find(c => c.name === e.target.value || c.companyName === e.target.value);
+    const selected = customerList.find(c => c.name === e.target.value || c.companyName === e.target.value);
     if (selected) {
       onChange(selected);
       if (selected.shippingAddress) setShowShipping(true);
@@ -45,15 +59,15 @@ export const ClientForm: React.FC<ClientFormProps> = ({ client, onChange }) => {
         </div>
 
         <div className="flex items-center gap-2">
-          {savedClients.length > 0 && (
+          {customerList.length > 0 && (
             <select
               aria-label="Load saved customer"
               onChange={handleSelectSavedClient}
               defaultValue=""
               className="text-xs bg-slate-50 border border-slate-300 rounded px-2 py-1 text-slate-700"
             >
-              <option value="" disabled>Load Saved Client...</option>
-              {savedClients.map((c, i) => (
+              <option value="" disabled>Load Saved Customer...</option>
+              {customerList.map((c, i) => (
                 <option key={i} value={c.name || c.companyName}>
                   {c.name || c.companyName} {c.companyName ? `(${c.companyName})` : ''}
                 </option>
@@ -64,10 +78,10 @@ export const ClientForm: React.FC<ClientFormProps> = ({ client, onChange }) => {
           <button
             type="button"
             onClick={handleSaveToAddressBook}
-            className="text-xs text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1 px-2 py-1 rounded hover:bg-blue-50 transition-colors"
+            className="text-xs text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1 px-2 py-1 rounded hover:bg-blue-50 transition-colors cursor-pointer"
           >
             <BookmarkCheck className="w-3.5 h-3.5" />
-            <span>{savedNotification ? 'Saved locally!' : 'Save Client'}</span>
+            <span>{savedNotification ? 'Saved to Customers!' : 'Save Customer'}</span>
           </button>
         </div>
       </div>
