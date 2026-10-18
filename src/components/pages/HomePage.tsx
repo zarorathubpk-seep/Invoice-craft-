@@ -116,12 +116,12 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onSelectTemplate
                 Design beautiful invoices, estimates, and receipts with free, easy-to-use business tools. Customize, preview in real time, and download crisp A4 PDF documents.
               </p>
 
-              {/* Action Buttons (Standardized button system: Primary & Secondary rounded-lg) */}
+              {/* Action Buttons: Exact 48px height parity & border alignment (Issue 5) */}
               <div className="flex flex-wrap items-center gap-3 pt-2">
                 <button
                   type="button"
                   onClick={() => onNavigate('generator')}
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-lg shadow-sm hover:shadow-md transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="inline-flex items-center justify-center gap-2 px-6 h-12 text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 active:bg-blue-800 border border-transparent rounded-lg shadow-sm hover:shadow-md transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 box-border"
                 >
                   <PlusCircle className="w-4 h-4" />
                   <span>Create Free Invoice</span>
@@ -130,7 +130,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onSelectTemplate
                 <button
                   type="button"
                   onClick={() => onNavigate('templates')}
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-300 rounded-lg shadow-xs transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-slate-300"
+                  className="inline-flex items-center justify-center gap-2 px-6 h-12 text-sm font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-300 rounded-lg shadow-xs transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-slate-300 box-border"
                 >
                   <span>Explore Templates</span>
                   <ArrowRight className="w-4 h-4 text-slate-500" />
@@ -310,7 +310,8 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onSelectTemplate
 
       {/* 2. POPULAR BUSINESS TOOLS SECTION */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        {/* Header: Centered alignment with H2 block prevents dropped buttons (Issue 4) */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <span className="text-xs font-bold text-blue-600 tracking-normal">Complete Business Suite</span>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-1">
@@ -322,7 +323,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onSelectTemplate
           </div>
           <button
             onClick={() => onNavigate('generator')}
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors cursor-pointer self-start md:self-auto shrink-0"
           >
             <span>View All Tools</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -338,7 +339,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onSelectTemplate
                 onClick={() => onNavigate(tool.route)}
                 className="p-5 bg-white rounded-xl border border-slate-200/90 hover:border-blue-300 hover:shadow-md transition-all cursor-pointer flex flex-col justify-between group space-y-4"
               >
-                <div className="space-y-3">
+                <div className="space-y-3 flex-1 flex flex-col">
                   <div className="flex items-center justify-between">
                     <div className="p-2 bg-blue-50 text-blue-600 rounded-lg group-hover:bg-blue-600 group-hover:text-white transition-colors">
                       <IconComponent className="w-5 h-5" />
@@ -352,7 +353,8 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onSelectTemplate
                     {tool.title}
                   </h3>
 
-                  <p className="text-xs text-slate-500 leading-relaxed">
+                  {/* Min-height ensures uniform vertical flow and eliminates awkward gap before CTA (Issue 7) */}
+                  <p className="text-xs text-slate-500 leading-relaxed min-h-[3rem] flex-1">
                     {tool.desc}
                   </p>
                 </div>
@@ -371,7 +373,8 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onSelectTemplate
       <section className="bg-slate-900 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           <div className="text-center max-w-2xl mx-auto space-y-3">
-            <span className="text-xs font-semibold uppercase tracking-widest text-teal-400">Streamlined Workflow</span>
+            {/* Removed uppercase tracking-widest (Issue 3) */}
+            <span className="text-xs font-bold tracking-normal text-teal-400">Streamlined Workflow</span>
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
               How InvoiceCraft Works
             </h2>
@@ -410,7 +413,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onSelectTemplate
 
       {/* 4. FEATURED TEMPLATES SHOWCASE */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <span className="text-xs font-bold text-blue-600 tracking-normal">Industry Specific</span>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-1">
@@ -422,7 +425,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onSelectTemplate
           </div>
           <button
             onClick={() => onNavigate('templates')}
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors cursor-pointer self-start md:self-auto shrink-0"
           >
             <span>Browse All 10 Templates</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -435,15 +438,49 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onSelectTemplate
               key={tpl.id}
               className="bg-white rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-md transition-all flex flex-col justify-between overflow-hidden group"
             >
-              <div className="p-6 bg-slate-50 border-b border-slate-100 flex items-center justify-center">
-                <div className="w-44 bg-white rounded-lg shadow-sm border border-slate-200 p-3 space-y-2 group-hover:scale-105 transition-transform">
-                  <div className="flex justify-between items-center border-b pb-1" style={{ borderColor: tpl.accentColor }}>
-                    <div className="w-10 h-2 rounded" style={{ backgroundColor: tpl.accentColor }} />
-                    <div className="w-6 h-1.5 bg-slate-200 rounded" />
+              {/* Rich, detailed invoice layout preview reflecting actual aesthetics (Issue 6) */}
+              <div className="p-5 bg-slate-50/80 border-b border-slate-100 flex items-center justify-center">
+                <div className="w-full max-w-[240px] bg-white rounded-lg shadow-sm border border-slate-200/90 p-3.5 space-y-2.5 group-hover:shadow-md transition-all text-[9px] leading-tight">
+                  {/* Top document branding bar */}
+                  <div className="flex justify-between items-start pb-1.5 border-b border-slate-100">
+                    <div className="space-y-1">
+                      <div className="h-2.5 w-14 rounded font-bold text-[8px] flex items-center" style={{ color: tpl.accentColor }}>
+                        {tpl.name.split(' ')[0]} Co.
+                      </div>
+                      <div className="h-1.5 w-16 bg-slate-200/70 rounded-xs" />
+                    </div>
+                    <div className="text-right">
+                      <span className="px-1.5 py-0.5 rounded text-[7px] font-bold uppercase" style={{ backgroundColor: `${tpl.accentColor}18`, color: tpl.accentColor }}>
+                        Invoice
+                      </span>
+                      <div className="text-slate-400 text-[8px] mt-0.5 font-mono">#INV-001</div>
+                    </div>
                   </div>
+
+                  {/* Micro table header & row */}
                   <div className="space-y-1">
-                    <div className="w-full h-1 bg-slate-100 rounded" />
-                    <div className="w-2/3 h-1 bg-slate-100 rounded" />
+                    <div className="flex justify-between text-slate-400 font-semibold border-b border-slate-100 pb-0.5 text-[7px] uppercase">
+                      <span>Service Item</span>
+                      <span>Total</span>
+                    </div>
+                    <div className="flex justify-between text-slate-700 py-0.5">
+                      <span className="truncate max-w-[120px] font-medium">{tpl.items[0]?.description || 'Professional Consulting'}</span>
+                      <span className="font-mono font-semibold">${tpl.items[0]?.rate || '1,200'}</span>
+                    </div>
+                    {tpl.items[1] && (
+                      <div className="flex justify-between text-slate-500 py-0.5 border-t border-slate-50">
+                        <span className="truncate max-w-[120px]">{tpl.items[1].description}</span>
+                        <span className="font-mono">${tpl.items[1].rate}</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Total footer */}
+                  <div className="pt-1 border-t border-slate-100 flex justify-between items-center text-[8px]">
+                    <span className="text-slate-500 font-medium">Balance Due</span>
+                    <span className="font-mono font-bold" style={{ color: tpl.accentColor }}>
+                      ${(tpl.items.reduce((sum, item) => sum + (item.quantity * item.rate), 0)).toLocaleString()}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -470,7 +507,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onSelectTemplate
 
       {/* 5. HELPFUL BUSINESS GUIDES */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <span className="text-xs font-bold text-blue-600 tracking-normal">Financial Education</span>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-1">
@@ -482,7 +519,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onSelectTemplate
           </div>
           <button
             onClick={() => onNavigate('blog')}
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors cursor-pointer self-start md:self-auto shrink-0"
           >
             <span>Explore All 12 Articles</span>
             <ArrowRight className="w-3.5 h-3.5" />
